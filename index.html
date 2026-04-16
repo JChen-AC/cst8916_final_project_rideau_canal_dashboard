@@ -70,6 +70,27 @@
             height: 450px;
             padding: 50px;
         }
+
+        .vertical_cards{
+            display:flex;
+            flex-direction: row;
+            gap:20px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            background-color: dodgerblue;
+            padding: 10px;
+            }
+        .veritcal_card_rows{
+            display:grid;
+            grid-template-columns: auto auto auto auto;
+
+            gap:20px;
+        }
+
     </style>
     <script>
 
@@ -89,9 +110,64 @@
         </div>
     </header>
     <main>
+        <div>
+            
+        </div>
         <div class="kpi-row">
+            <div class="kpi">        
+                <div>
+                    <h2> Location 1</h2>
+                    <div class="">
+                        <p> Status : Safe</p>                    
+                    </div>
+                    
+                </div>        
+                
+                    <div>
+                        <h3>
+                        Ice Thickness:
+                        </h3>
+                        <ul>
+                            <li>
+                                Average:
+                            </li>
+                            <li>Min</li>
+                            <li>Max</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>
+                            Surface Temperature:
+                        </h3>
+                        <ul>
+                            <li>Min</li>
+                            <li>Max</li>
+
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>
+                            Snow Accumulation:
+                        </h3>
+                        <p>Value</p>
+                    </div>
+
+                    <div>
+                        <h3>
+                            avg External Temperature:
+                        </h3>
+                        <p>Value</p>
+                </div>
+
+            </div>
             <div class="kpi">
-                <h2> Location 1</h2>
+                <div>
+                    <h2> Location 2</h2>
+                    <div class="">
+                        <p> Status : Safe</p>                    
+                    </div>
+                    
+                </div>   
                 <div>
                     <h3>
                         Ice Thickness:
@@ -127,48 +203,15 @@
                     </h3>
                     <p>Value</p>
                 </div>
-
             </div>
             <div class="kpi">
-                <h2> Location 2</h2>
                 <div>
-                    <h3>
-                        Ice Thickness:
-                    </h3>
-                    <ul>
-                        <li>
-                            Average:
-                        </li>
-                        <li>Min</li>
-                        <li>Max</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>
-                        Surface Temperature:
-                    </h3>
-                    <ul>
-                        <li>Min</li>
-                        <li>Max</li>
-
-                    </ul>
-                </div>
-                <div>
-                    <h3>
-                        Snow Accumulation:
-                    </h3>
-                    <p>Value</p>
-                </div>
-
-                <div>
-                    <h3>
-                        avg External Temperature:
-                    </h3>
-                    <p>Value</p>
-                </div>
-            </div>
-            <div class="kpi">
-                <h2>Location 3</h2>
+                    <h2> Location 3</h2>
+                    <div class="">
+                        <p> Status : Safe</p>                    
+                    </div>
+                    
+                </div>   
                 <div>
                     <h3>
                         Ice Thickness:
@@ -206,12 +249,7 @@
                 </div>
             </div>
         </div>
-        <div class="mid-status danger">
-            <h2>
-                STATUS:
-            </h2>
-            <p class="mid-status-text">Safe</p>
-        </div>
+
 
         <div>
             <h2>Historical Data </h2>
@@ -234,7 +272,7 @@
             <script src="backend.js"></script>
         </div>
     </main>
-
+    
 </body>
 
 </html>
