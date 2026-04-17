@@ -8,8 +8,14 @@ function fetchAndRender(){
         renderCosmoUpdate(cosmo_response);
       })
       .catch(err => console.error("Poll error:", err));
-  fetch("/get_blob")
+  
 
+}
+
+function testBlob(){
+    console.log("testBlob")
+    fetch("/get_blob")
+    .then(res => res.json())
 }
 
 function update_status_style(data){
@@ -91,113 +97,183 @@ function renderCosmoUpdate(data){
 }
 
 const testbut = document.getElementById("testbutton");
-testbut.addEventListener("click", fetchAndRender);
+testbut.addEventListener("click", testBlob);
 
-// //CHARTS 
-// const ctx   = document.getElementById('historyData').getContext('2d');
-// const chart = new Chart(ctx, {
-//   type: 'line',
-//   data: {
-//     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
-//     datasets: [{
-//       label:           'Temperature (°C)',
-//       data:            [4, 7, 12, 18, 22, 26],            // Y axis values
-//       borderColor:     'rgb(75, 192, 192)',
-//       backgroundColor: 'rgba(75, 192, 192, 0.1)',
-//       tension:         0.4,     // curve smoothing (0 = straight lines)
-//       fill:            true,    // fill area under line
-//     }]
-//   },
-//   options: {
-//     responsive: true,
-//     maintainAspectRatio: false,
-//     plugins: {
-//       legend: { position: 'top' },
-//       title:  { display: true, text: 'Monthly Temperature' }
-//     },
-//     scales: {
-//       y: { beginAtZero: false }
-//     }
-//   }
-// });
+function create_x_axis(starthr=1){
+  let x = []
+  for(let i=starthr;i<=24;i++){
+    hr = i%24;
+    x.push(hr.toString())
+  }
+  return hr
+}
 
-// const ctx2   = document.getElementById('icehistory').getContext('2d');
-// const chart2 = new Chart(ctx2, {
-//   type: 'line',
-//   data: {
-//     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
-//     datasets: [{
-//       label:           'Temperature (°C)',
-//       data:            [4, 7, 12, 18, 22, 26],            // Y axis values
-//       borderColor:     'rgb(75, 192, 192)',
-//       backgroundColor: 'rgba(75, 192, 192, 0.1)',
-//       tension:         0.4,     // curve smoothing (0 = straight lines)
-//       fill:            true,    // fill area under line
-//     }]
-//   },
-//   options: {
-//     responsive: true,
-//     maintainAspectRatio: false,
-//     plugins: {
-//       legend: { position: 'top' },
-//       title:  { display: true, text: 'Monthly Temperature' }
-//     },
-//     scales: {
-//       y: { beginAtZero: false }
-//     }
-//   }
-// });
+function create_chart(ctx){
+  let temp_chart = new Chart(ctx,{
+    type:'line',
+    datasets:{
+      //labels: create_x_axis(1),
+      datasets:[{
+        label: "Dow's Lake",
+        data:[]
+      },
+      {
+        label: 'Fifth Avenue',
+        data:[]
+      },
+      {
+        label: 'NAC',
+        data:[]
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        title:  { display: true}
+      },
+      scales: {        
+        y: { beginAtZero: false },
+        x:{type:'time'}
+      }
+    }
 
-// const ctx3   = document.getElementById('temphistory').getContext('2d');
-// const chart3 = new Chart(ctx3, {
-//   type: 'line',
-//   data: {
-//     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
-//     datasets: [{
-//       label:           'Temperature (°C)',
-//       data:            [4, 7, 12, 18, 22, 26],            // Y axis values
-//       borderColor:     'rgb(75, 192, 192)',
-//       backgroundColor: 'rgba(75, 192, 192, 0.1)',
-//       tension:         0.4,     // curve smoothing (0 = straight lines)
-//       fill:            true,    // fill area under line
-//     }]
-//   },
-//   options: {
-//     responsive: true,
-//     maintainAspectRatio: false,
-//     plugins: {
-//       legend: { position: 'top' },
-//       title:  { display: true, text: 'Monthly Temperature' }
-//     },
-//     scales: {
-//       y: { beginAtZero: false }
-//     }
-//   }
-// });
+  });
+  return temp_chart;
+}
 
-// const ctx4   = document.getElementById('snowhistory').getContext('2d');
-// const chart4 = new Chart(ctx4, {
-//   type: 'line',
-//   data: {
-//     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
-//     datasets: [{
-//       label:           'Temperature (°C)',
-//       data:            [4, 7, 12, 18, 22, 26],            // Y axis values
-//       borderColor:     'rgb(75, 192, 192)',
-//       backgroundColor: 'rgba(75, 192, 192, 0.1)',
-//       tension:         0.4,     // curve smoothing (0 = straight lines)
-//       fill:            true,    // fill area under line
-//     }]
-//   },
-//   options: {
-//     responsive: true,
-//     maintainAspectRatio: false,
-//     plugins: {
-//       legend: { position: 'top' },
-//       title:  { display: true, text: 'Monthly Temperature' }
-//     },
-//     scales: {
-//       y: { beginAtZero: false }
-//     }
-//   }
-// });
+async function update_chart(){
+  fetch("/get_blob").then(res => res.json())
+    .then(cosmo_response => {
+      renderCosmoUpdate(cosmo_response);
+    })
+    .catch(err => console.error("Poll error:", err));
+}
+
+let historyChart;
+let iceChart;
+let snowChart;
+let externalTempChart;
+let surfaceTempChart;
+
+function initialize_charts(){
+  const history_ctx   = document.getElementById('historyData').getContext('2d');
+  const ice_ctx   = document.getElementById('icehistory').getContext('2d');
+  const temp_ctx   = document.getElementById('temphistory').getContext('2d');
+  const snow_ctx  = document.getElementById('snowhistory').getContext('2d');
+
+  historyChart = create_chart(history_ctx);
+  iceChart = create_chart(ice_ctx);
+  snowChart = create_chart(snow_ctx);
+  surfaceTempChart = create_chart(temp_ctx);
+}
+
+//CHARTS 
+const ctx   = document.getElementById('historyData').getContext('2d');
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
+    datasets: [{
+      label:           'Temperature (°C)',
+      data:            [4, 7, 12, 18, 22, 26],            // Y axis values
+      borderColor:     'rgb(75, 192, 192)',
+      backgroundColor: 'rgba(75, 192, 192, 0.1)',
+      tension:         0.4,     // curve smoothing (0 = straight lines)
+      fill:            true,    // fill area under line
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top' },
+      title:  { display: true, text: 'Monthly Temperature' }
+    },
+    scales: {
+      y: { beginAtZero: false }
+    }
+  }
+});
+
+const ctx2   = document.getElementById('icehistory').getContext('2d');
+const chart2 = new Chart(ctx2, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
+    datasets: [{
+      label:           'Temperature (°C)',
+      data:            [4, 7, 12, 18, 22, 26],            // Y axis values
+      borderColor:     'rgb(75, 192, 192)',
+      backgroundColor: 'rgba(75, 192, 192, 0.1)',
+      tension:         0.4,     // curve smoothing (0 = straight lines)
+      fill:            true,    // fill area under line
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top' },
+      title:  { display: true, text: 'Monthly Temperature' }
+    },
+    scales: {
+      y: { beginAtZero: false }
+    }
+  }
+});
+
+const ctx3   = document.getElementById('temphistory').getContext('2d');
+const chart3 = new Chart(ctx3, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
+    datasets: [{
+      label:           'Temperature (°C)',
+      data:            [4, 7, 12, 18, 22, 26],            // Y axis values
+      borderColor:     'rgb(75, 192, 192)',
+      backgroundColor: 'rgba(75, 192, 192, 0.1)',
+      tension:         0.4,     // curve smoothing (0 = straight lines)
+      fill:            true,    // fill area under line
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top' },
+      title:  { display: true, text: 'Monthly Temperature' }
+    },
+    scales: {
+      y: { beginAtZero: false }
+    }
+  }
+});
+
+const ctx4   = document.getElementById('snowhistory').getContext('2d');
+const chart4 = new Chart(ctx4, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],  // X axis
+    datasets: [{
+      label:           'Temperature (°C)',
+      data:            [4, 7, 12, 18, 22, 26],            // Y axis values
+      borderColor:     'rgb(75, 192, 192)',
+      backgroundColor: 'rgba(75, 192, 192, 0.1)',
+      tension:         0.4,     // curve smoothing (0 = straight lines)
+      fill:            true,    // fill area under line
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top' },
+      title:  { display: true, text: 'Monthly Temperature' }
+    },
+    scales: {
+      y: { beginAtZero: false }
+    }
+  }
+});
