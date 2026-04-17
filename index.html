@@ -114,11 +114,11 @@
             
         </div>
         <div class="kpi-row">
-            <div class="kpi">        
+            <div class="kpi DowsLake">        
                 <div>
                     <h2> Location 1</h2>
-                    <div class="">
-                        <p> Status : Safe</p>                    
+                    <div class="status">
+                        <p class="status"> Status : Safe</p>                    
                     </div>
                     
                 </div>        
@@ -128,11 +128,11 @@
                         Ice Thickness:
                         </h3>
                         <ul>
-                            <li>
+                            <li class="average_ice">
                                 Average:
                             </li>
-                            <li>Min</li>
-                            <li>Max</li>
+                            <li class="min_ice">Min</li>
+                            <li class="max_ice">Max</li>
                         </ul>
                     </div>
                     <div>
@@ -140,8 +140,8 @@
                             Surface Temperature:
                         </h3>
                         <ul>
-                            <li>Min</li>
-                            <li>Max</li>
+                            <li class="min_surface">Min</li>
+                            <li class="max_surface">Max</li>
 
                         </ul>
                     </div>
@@ -149,18 +149,18 @@
                         <h3>
                             Snow Accumulation:
                         </h3>
-                        <p>Value</p>
+                        <p class="snow">Value</p>
                     </div>
 
                     <div>
                         <h3>
                             avg External Temperature:
                         </h3>
-                        <p>Value</p>
+                        <p class="external">Value</p>
                 </div>
 
             </div>
-            <div class="kpi">
+            <div class="kpi FifthAvenue">
                 <div>
                     <h2> Location 2</h2>
                     <div class="">
@@ -168,87 +168,92 @@
                     </div>
                     
                 </div>   
-                <div>
-                    <h3>
+                </div>        
+                
+                    <div>
+                        <h3>
                         Ice Thickness:
-                    </h3>
-                    <ul>
-                        <li>
-                            Average:
-                        </li>
-                        <li>Min</li>
-                        <li>Max</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>
-                        Surface Temperature:
-                    </h3>
-                    <ul>
-                        <li>Min</li>
-                        <li>Max</li>
+                        </h3>
+                        <ul>
+                            <li class="average_ice">
+                                Average:
+                            </li>
+                            <li class="min_ice">Min</li>
+                            <li class="max_ice">Max</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>
+                            Surface Temperature:
+                        </h3>
+                        <ul>
+                            <li class="min_surface">Min</li>
+                            <li class="max_surface">Max</li>
 
-                    </ul>
-                </div>
-                <div>
-                    <h3>
-                        Snow Accumulation:
-                    </h3>
-                    <p>Value</p>
-                </div>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>
+                            Snow Accumulation:
+                        </h3>
+                        <p class="snow">Value</p>
+                    </div>
 
-                <div>
-                    <h3>
-                        avg External Temperature:
-                    </h3>
-                    <p>Value</p>
+                    <div>
+                        <h3>
+                            avg External Temperature:
+                        </h3>
+                        <p class="external">Value</p>
                 </div>
             </div>
-            <div class="kpi">
+            <div class="kpi NAC">
                 <div>
                     <h2> Location 3</h2>
                     <div class="">
-                        <p> Status : Safe</p>                    
+                        <p class="status"> Status : Safe</p>                    
                     </div>
                     
                 </div>   
-                <div>
-                    <h3>
+                </div>       
+                
+                    <div>
+                        <h3>
                         Ice Thickness:
-                    </h3>
-                    <ul>
-                        <li>
-                            Average:
-                        </li>
-                        <li>Min</li>
-                        <li>Max</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>
-                        Surface Temperature:
-                    </h3>
-                    <ul>
-                        <li>Min</li>
-                        <li>Max</li>
+                        </h3>
+                        <ul>
+                            <li class="average_ice">
+                                Average:
+                            </li>
+                            <li class="min_ice">Min</li>
+                            <li class="max_ice">Max</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>
+                            Surface Temperature:
+                        </h3>
+                        <ul>
+                            <li class="min_surface">Min</li>
+                            <li class="max_surface">Max</li>
 
-                    </ul>
-                </div>
-                <div>
-                    <h3>
-                        Snow Accumulation:
-                    </h3>
-                    <p>Value</p>
-                </div>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>
+                            Snow Accumulation:
+                        </h3>
+                        <p class="snow">Value</p>
+                    </div>
 
-                <div>
-                    <h3>
-                        avg External Temperature:
-                    </h3>
-                    <p>Value</p>
+                    <div>
+                        <h3>
+                            avg External Temperature:
+                        </h3>
+                        <p class="external">Value</p>
                 </div>
             </div>
         </div>
+        <button id="testbutton"> TEST BUTTON HERE AND THERE </button>
 
 
         <div>
@@ -269,10 +274,10 @@
                 <h3>Snow History </h3>
                 <canvas id="snowhistory"></canvas>
             </div>
-            <script src="backend.js"></script>
+            <script src="frontend.js"></script>
         </div>
     </main>
-    
+
 </body>
 
 </html>
