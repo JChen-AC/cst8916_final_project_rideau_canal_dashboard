@@ -16,6 +16,9 @@ function testBlob(){
     console.log("testBlob")
     fetch("/get_blob")
     .then(res => res.json())
+    .then(blob_response =>{
+      processChartData(blob_response);
+    });
 }
 
 function update_status_style(data){
@@ -166,40 +169,25 @@ function processChartData(data_response){
     "ice":{
       "DowsLake":{ min:[], max:[], avg:[] },
       "FifthAvenue":{ min:[], max:[], avg:[] },
-      "NAC":{
-        min:[],
-        max:[],
-        avg:[]
+      "NAC":{ min:[], max:[], avg:[]
       }
     },
-    "snow":{
-      "DowsLake":[],
-      "FifthAvenue":[],
-      "NAC":[]
+    "snow":{ "DowsLake":[], "FifthAvenue":[], "NAC":[]
     },
     "temp":{
-      "DowsLake":{
-        min:[],
-        max:[],
-        external:[]
+      "DowsLake":{ min:[], max:[], external:[]
       },
-      "FifthAvenue":{
-        min:[],
-        max:[],
-        external:[]
+      "FifthAvenue":{ min:[], max:[], external:[]
       },        
       "NAC":
-        {
-          min:[],
-          max:[],
-          external:[]
+        { min:[], max:[], external:[]
         }
       
     }  ,
     "timestamp":[]
   }
-  for (data in data_response){
-    for(chunk in data){
+  for (const data of data_response){
+    for(const chunk of data){
       processed["status"][chunk.location].push(chunk.status);
       processed["timestamp"].push(chunk.dateTimeStamp);
       processed["ice"][chunk.location]["min"].push(chunk.minThickness);
@@ -211,6 +199,8 @@ function processChartData(data_response){
       processed["temp"][chunk.location]["external"].push(chunk.avgExternalTemperature);
     }
   }
+  console.log(processed);
+  return processed ;
 
   /*
   return: 
