@@ -8,23 +8,31 @@ function fetchAndRender(){
         renderCosmoUpdate(cosmo_response);
       })
       .catch(err => console.error("Poll error:", err));
-  initialize_charts();
   fetch("/get_blob").then(res => res.json())
     .then(blob_response => {
       renderChartUpdates(blob_response);
     })
     .catch(err => console.error("Poll error:", err));
-
+  fetch("/check_connection")
+    .then(res => res.json())
+    .then(blob_response =>{
+      update_web_status(blob_response);
+    });
 }
 
 function testBlob(){
     console.log("testBlob")
-    initialize_charts();
-    fetch("/get_blob")
+    //initialize_charts();
+    fetch("/check_connection")
     .then(res => res.json())
     .then(blob_response =>{
-      renderChartUpdates(blob_response);
+      update_web_status(blob_response);
     });
+}
+
+function update_web_status(data){
+  const pg_status = document.getElementById("page_status");
+  pg_status.textContent=`Status: ${data.status}`
 }
 
 function update_status_style(data){
@@ -64,6 +72,7 @@ function renderCosmoUpdate(data){
         update values location.value 
 
     */
+   console.log("Update cosmo")
    console.log(data)
    for(const loc_data of data){
         console.log(loc_data)
@@ -92,21 +101,32 @@ function renderCosmoUpdate(data){
           console.log(minIceElement2);
           console.log(loc_data.minThickness)
           console.log(`Mibn collect : ${loc_data.minThickness}`)
-          minIceElement2.textContent = `Average : ${loc_data.minThickness}`;   
+          minIceElement2.textContent = `Min : ${loc_data.minThickness}`;   
           // issue with values not being updated 
             // reason is wrong element being used, still using status
 
         const maxIceElement = card.querySelector('.max_ice');
+        maxIceElement.textContent = `Max : ${loc_data.maxThickness}`;  
+
+        const avgSurfaceElement = card.querySelector('.avg_surface');
+        avgSurfaceElement.textContent = `Min : ${loc_data.avgSurfaceTemperature}`; 
+
         const minSurfaceElement = card.querySelector('.min_surface');
+        minSurfaceElement.textContent = `Min : ${loc_data.minSurface}`;  
+
         const maxSurfaceElement = card.querySelector('.max_surface');
+        maxSurfaceElement.textContent = `Max : ${loc_data.maxSurface}`;  
+
         const snowElement = card.querySelector('.snow');
+        snowElement.textContent = `Value : ${loc_data.snowAccumulation}`
         const externalElement = card.querySelector('.external');
+        externalElement.textContent = `Value : ${loc_data.avgExternalTemperature}`
 
     }
 }
 
 const testbut = document.getElementById("testbutton");
-testbut.addEventListener("click", fetchAndRender);
+testbut.addEventListener("click", testBlob);
 
 function create_x_axis(starthr=1){
   let x = []
@@ -423,3 +443,5 @@ function initialize_charts(){
   }
     
 }
+  initialize_charts();
+  setInterval(fetchAndRender,POLL_INTERVAL_MS)

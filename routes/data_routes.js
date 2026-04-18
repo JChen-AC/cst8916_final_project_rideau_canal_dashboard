@@ -35,6 +35,7 @@ router.get('/get_cosmodb', async (req,res)=>{
 });
 
 
+//AI Generated function to find the
 async function getLatestSegment(containerClient, prefix) {
   console.log("Here3")
 
@@ -110,16 +111,6 @@ async function streamToText(readable) {
   return data;
 }
 
-// Convert stream to text
-async function streamToText(readable) {
-  readable.setEncoding('utf8');
-  let data = '';
-  for await (const chunk of readable) {
-    data += chunk;
-  }
-  return data;
-}
-
 router.get('/get_blob', async (req, res) => {
   try {
     console.log("Here1");
@@ -143,11 +134,12 @@ router.get('/get_blob', async (req, res) => {
       const raw = await streamToText(downloadResponse.readableStreamBody);
 
       console.log("Parsing JSON...");
+      // AI
       const parsed = raw
         .split('\n')
         .filter(line => line.trim() !== '')
         .map(line => JSON.parse(line));
-
+      // END AI 
       temp.push(parsed);
     }
 
@@ -160,6 +152,43 @@ router.get('/get_blob', async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
+async function checkCosmo(){
+  try{
+    await container.read();
+    return true;
+  }
+  catch(err){
+    return false;
+  }
+}
+
+async function checkBlob(){
+  try{
+    const exists = await containerClient.exists();
+    if(exists){
+      return true; 
+    }
+    return false;
+  }
+  catch(err){
+    return false 
+  }
+}
+
+router.get('/check_connection',async(req,res)=>{
+  let cosmoHealth = await checkCosmo();
+  let blobHealth = await checkBlob();
+  if(cosmoHealth && blobHealth){
+    console.log("Inner : live")
+    res.status(200).json({ status: 'live' }); // AI helped with the json
+  }
+  else{
+    console.log("Inner : down")
+    res.status(201).json({ status: 'down' });   // AI helped with the json
+  }
+  
+})
 
 router.get('/health',async (req,res)=>{
   res.status(200,"Health")
