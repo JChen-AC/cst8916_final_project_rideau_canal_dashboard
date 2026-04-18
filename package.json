@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "@azure/cosmos": "^4.9.2",
+    "@azure/storage-blob": "^12.31.0",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "name": "cst8916_final_project_dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@JChen-AC:JChen-AC/cst8916_final_project_dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
