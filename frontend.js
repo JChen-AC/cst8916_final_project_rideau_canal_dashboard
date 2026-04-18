@@ -29,6 +29,14 @@ function testBlob(){
       update_web_status(blob_response);
     });
 }
+function testBlob2(){
+  fetch("/get_cosmodb")
+    .then(res => res.json())
+    .then(cosmo_response => {
+        renderCosmoUpdate(cosmo_response);
+      })
+      .catch(err => console.error("Poll error:", err));
+}
 
 function update_web_status(data){
   const pg_status = document.getElementById("page_status");
@@ -83,12 +91,38 @@ function renderCosmoUpdate(data){
         console.log(loc_data.status);
         statusElement.textContent = `Status : ${loc_data.status}`;   
         console.log(update_status_style(loc_data.status));
+
         let classlist = Array.from(statusElement.classList)
+        console.log("Class list: ",classlist);
+        console.log("specific style: ",get_current_style(classlist));
+        console.log("danger check: ",classlist.includes("danger"))
+        console.log("caution check: ",classlist.includes("caution"))
+        console.log("safe check: ",classlist.includes("safe"))
         /*console.log(get_current_style(classlist));
         NEed to get the last class / find the current colour class an replace it with the new one 
         */
-
-        statusElement.classList.add(update_status_style(loc_data.status)) ;    
+       let current_style;
+        if(classlist.includes("danger")){
+          current_style = "danger";
+        }
+        else if(classlist.includes("caution")){
+          current_style = "caution";
+        }
+        else if(classlist.includes("safe")){
+          current_style = "safe";
+        }
+        else{
+          current_style = "ERROR"
+        }
+        console.log("Current style:",current_style)
+        
+        let new_style = update_status_style(loc_data.status);
+        console.log("new style:",new_style)
+        if(new_style !== current_style){
+          console.log("Different values Chaning")
+          statusElement.classList.remove(current_style);
+          statusElement.classList.add(new_style) ;   
+        }         
           const avgIceElement = card.querySelector('.average_ice');
           console.log(avgIceElement);
           console.log(loc_data.avgIceThickness)
@@ -126,7 +160,7 @@ function renderCosmoUpdate(data){
 }
 
 const testbut = document.getElementById("testbutton");
-testbut.addEventListener("click", testBlob);
+testbut.addEventListener("click", testBlob2);
 
 function create_x_axis(starthr=1){
   let x = []
@@ -444,4 +478,4 @@ function initialize_charts(){
     
 }
   initialize_charts();
-  setInterval(fetchAndRender,POLL_INTERVAL_MS)
+  //setInterval(fetchAndRender,POLL_INTERVAL_MS)
