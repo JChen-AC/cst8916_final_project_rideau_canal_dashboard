@@ -155,7 +155,7 @@ function create_scatter_chart(ctx,){
       },
       scales: {       
         
-        x:{type:'time'},
+        x:{type:'time',stepSize: 5,  },
 
         // ai generated y axis relabelling
         y: {
@@ -177,6 +177,42 @@ function create_scatter_chart(ctx,){
   });
   return temp_chart;
 }
+
+function multi_create_chart(ctx){
+  let temp_chart = new Chart(ctx,{
+    type:'line',
+    data:{
+      //labels: create_x_axis(1),
+      datasets:[
+        // colours gotten from claude
+      { label: "Dow's Lake Average", data:[], borderColor: '#FF0000', },
+      { label: 'Fifth Avenue Average', data:[], borderColor: '#00CC00', },
+      { label: 'NAC Average', data:[], borderColor: '#0000FF', },
+      { label: "Dow's Lake Min", data:[], borderColor: '#FF6666', },
+      { label: 'Fifth Avenue Min', data:[], borderColor: '#90EE90', },
+      { label: 'NAC Min', data:[], borderColor: '#ADD8E6', },
+      { label: "Dow's Lake Max", data:[], borderColor: '#8B0000', },
+      { label: 'Fifth Avenue Max', data:[], borderColor: '#006400', },
+      { label: 'NAC Max', data:[], borderColor: '#00008B', },     
+    ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        title:  { display: true}
+      },
+      scales: {        
+        y: { beginAtZero: false },
+        x:{type:'time',stepSize: 5,}
+      }
+    }
+
+  });
+  return temp_chart;
+}
+
 
 function create_chart(ctx){
   let temp_chart = new Chart(ctx,{
@@ -208,7 +244,7 @@ function create_chart(ctx){
       },
       scales: {        
         y: { beginAtZero: false },
-        x:{type:'time'}
+        x:{type:'time',stepSize: 5,}
       }
     }
 
@@ -244,6 +280,47 @@ function renderChartUpdates(blob_response){
   console.log("Data loaded updating now")
   historyChart.update();
   console.log("Finished updating ")
+
+  console.log("Updating snow chart");
+  snowChart.data.datasets[0].data = processed_data.snow.DowsLake;
+  snowChart.data.datasets[1].data = processed_data.snow.FifthAvenue;
+  snowChart.data.datasets[2].data = processed_data.snow.NAC;
+  snowChart.data.labels= processed_data.timestamp;
+  snowChart.update();
+  console.log("Finish updating snow")
+
+  console.log("Updating temp chart");
+  surfaceTempChart.data.datasets[0].label = "Dow's Lake External Temperature";
+  surfaceTempChart.data.datasets[0].data = processed_data.temp.DowsLake.external;
+  surfaceTempChart.data.datasets[1].label = "Fifth Avenue External Temperature";
+  surfaceTempChart.data.datasets[1].data = processed_data.temp.FifthAvenue.external;
+  surfaceTempChart.data.datasets[2].label = "NAC External Temperature";
+  surfaceTempChart.data.datasets[2].data = processed_data.temp.NAC.external;
+  surfaceTempChart.data.datasets[3].data = processed_data.temp.DowsLake.min;
+  surfaceTempChart.data.datasets[4].data = processed_data.temp.FifthAvenue.min;
+  surfaceTempChart.data.datasets[5].data = processed_data.temp.NAC.min;
+  surfaceTempChart.data.datasets[6].data = processed_data.temp.DowsLake.max;
+  surfaceTempChart.data.datasets[7].data = processed_data.temp.FifthAvenue.max;
+  surfaceTempChart.data.datasets[8].data = processed_data.temp.NAC.max;
+  surfaceTempChart.data.labels= processed_data.timestamp;
+  surfaceTempChart.update();
+  console.log("Finish updating temp")
+
+  console.log("Updating ice chart");
+  iceChart.data.datasets[0].data = processed_data.ice.DowsLake.external;
+  iceChart.data.datasets[1].data = processed_data.ice.FifthAvenue.external;
+  iceChart.data.datasets[2].data = processed_data.ice.NAC.external;
+  iceChart.data.datasets[3].data = processed_data.ice.DowsLake.min;
+  iceChart.data.datasets[4].data = processed_data.ice.FifthAvenue.min;
+  iceChart.data.datasets[5].data = processed_data.ice.NAC.min;
+  iceChart.data.datasets[6].data = processed_data.ice.DowsLake.max;
+  iceChart.data.datasets[7].data = processed_data.ice.FifthAvenue.max;
+  iceChart.data.datasets[8].data = processed_data.ice.NAC.max;
+  iceChart.data.labels= processed_data.timestamp;
+  iceChart.update();
+
+  console.log("Finish updating ice")
+
 
 //   iceChart.data.datasets
 
@@ -378,7 +455,7 @@ function initialize_charts(){
     historyChart = create_scatter_chart(history_ctx);
   }
   if(!iceChart){
-      iceChart = create_chart(ice_ctx);
+      iceChart = multi_create_chart(ice_ctx);
 
   }
   if(!snowChart){
@@ -386,7 +463,7 @@ function initialize_charts(){
 
   }
   if(!surfaceTempChart){
-      surfaceTempChart = create_chart(temp_ctx);
+      surfaceTempChart = multi_create_chart(temp_ctx);
 
   }
     
