@@ -3,7 +3,7 @@ const { CosmosClient } = require("@azure/cosmos");
 const { BlobServiceClient } = require("@azure/storage-blob");
 const fs = require("fs");
 const express = require('express');
-const router    = express.Router();
+const router = express.Router();
 
 const client = new CosmosClient({
   endpoint: process.env.COSMOS_ENDPOINT,   // e.g. https://your-account.documents.azure.com:443/
@@ -16,20 +16,20 @@ const container = database.container(process.env.COSMOS_CONTAINER);
 const blobServiceClient = BlobServiceClient.fromConnectionString(
   process.env.AZURE_STORAGE_CONNECTION_STRING
 );
-  const containerClient = blobServiceClient.getContainerClient(process.env.BLOB_CONTAINER);
+const containerClient = blobServiceClient.getContainerClient(process.env.BLOB_CONTAINER);
 
 
 
-router.get('/get_cosmodb', async (req,res)=>{
-  try{
+router.get('/get_cosmodb', async (req, res) => {
+  try {
     console.log("HEre")
-    const {resources} = await container.items.query("SELECT TOP 3 * FROM c  ORDER BY c.dateTimeStamp DESC").fetchAll();
+    const { resources } = await container.items.query("SELECT TOP 3 * FROM c  ORDER BY c.dateTimeStamp DESC").fetchAll();
     //console.log("THere")
     res.json(resources);
     //console.log("end")
   }
-  catch(err){
-    console.log("error: ",err.message)
+  catch (err) {
+    console.log("error: ", err.message)
     res.status(500).json({ error: err.message });
   }
 });
@@ -68,8 +68,8 @@ async function getLatestHourFiles(rootPrefix = "root/") {
   //const containerClient = blobServiceClient.getContainerClient(containerName);
   console.log("Here2")
   // Step 1 — Latest year
-  const latestYear  = await getLatestSegment(containerClient, rootPrefix);
-  if (!latestYear)  return [];
+  const latestYear = await getLatestSegment(containerClient, rootPrefix);
+  if (!latestYear) return [];
   console.log(`📅 Latest year  : ${latestYear.name}`);
 
   // Step 2 — Latest month
@@ -78,13 +78,13 @@ async function getLatestHourFiles(rootPrefix = "root/") {
   console.log(`📅 Latest month : ${latestMonth.name}`);
 
   // Step 3 — Latest day
-  const latestDay   = await getLatestSegment(containerClient, latestMonth.fullPrefix);
-  if (!latestDay)   return [];
+  const latestDay = await getLatestSegment(containerClient, latestMonth.fullPrefix);
+  if (!latestDay) return [];
   console.log(`📅 Latest day   : ${latestDay.name}`);
 
   // Step 4 — Latest hour
-  const latestHour  = await getLatestSegment(containerClient, latestDay.fullPrefix);
-  if (!latestHour)  return [];
+  const latestHour = await getLatestSegment(containerClient, latestDay.fullPrefix);
+  if (!latestHour) return [];
   console.log(`📅 Latest hour  : ${latestHour.name}`);
 
   console.log(`\n✅ Latest path  : ${latestHour.fullPrefix}`);
@@ -160,45 +160,45 @@ router.get('/get_blob', async (req, res) => {
   }
 });
 
-async function checkCosmo(){
-  try{
+async function checkCosmo() {
+  try {
     await container.read();
     return true;
   }
-  catch(err){
+  catch (err) {
     return false;
   }
 }
 
-async function checkBlob(){
-  try{
+async function checkBlob() {
+  try {
     const exists = await containerClient.exists();
-    if(exists){
-      return true; 
+    if (exists) {
+      return true;
     }
     return false;
   }
-  catch(err){
-    return false 
+  catch (err) {
+    return false
   }
 }
 
-router.get('/check_connection',async(req,res)=>{
+router.get('/check_connection', async (req, res) => {
   let cosmoHealth = await checkCosmo();
   let blobHealth = await checkBlob();
-  if(cosmoHealth && blobHealth){
+  if (cosmoHealth && blobHealth) {
     console.log("Inner : live")
     res.status(200).json({ status: 'live' }); // AI helped with the json
   }
-  else{
+  else {
     console.log("Inner : down")
     res.status(201).json({ status: 'down' });   // AI helped with the json
   }
-  
+
 })
 
-router.get('/health',async (req,res)=>{
-  res.status(200,"Health")
+router.get('/health', async (req, res) => {
+  res.status(200, "Health")
 })
 
 module.exports = router;
