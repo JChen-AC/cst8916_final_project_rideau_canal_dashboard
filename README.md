@@ -82,7 +82,7 @@ Description: A simple health check that returns 200 if it is able to be connecte
 
 ## Deployment to Azure App Services 
 
-1) Create an Azure App Service, selecting a region that is the same to the other cloud services being used, chosing no redundancy. The publish will be set to code and the rutime stack is Node.js 20. 
+1) Create an Azure App Service, selecting a region that is the same to the other cloud services being used, chosing no redundancy. The publish will be set to code and the runtime stack is Node.js 20. 
 2) For deployment select contious deployment, and connect your GitHub Account. For the repository select the forked version of this repo and the branch set to main. 
 3) enasure that public access is true in the networking tab and leave everything else the same
 4) create the App Service

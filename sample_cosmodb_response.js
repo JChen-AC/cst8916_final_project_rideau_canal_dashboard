@@ -1,0 +1,67 @@
+{
+    0: {
+        avgExternalTemperature: 2.32
+        avgIceThickness: 50.43
+        avgSurfaceTemperature: -38.98
+        dateTimeStamp: "2026-04-19T01:40:00.0000000Z"
+        id: "DowsLake-20260419-014000"
+        location: "DowsLake"
+        maxSurface: -38.98
+        maxThickness: 50.43
+        minSurface: -38.98
+        minThickness: 50.43
+        readings: 1
+        snowAccumulation: 15.31
+        status: "Safe"
+        _attachments: "attachments/"
+        _etag: "\"1b005f47-0000-0a00-0000-69e432790000\""
+        _rid: "ZZxRAKwB8CxlAAAAAAAAAA=="
+        _self: "dbs/ZZxRAA==/colls/ZZxRAKwB8Cw=/docs/ZZxRAKwB8CxlAAAAAAAAAA==/"
+        _ts: 1776562809
+        [[Prototype]]: Object
+    }
+    1: {
+        avgExternalTemperature: -15.879333333333333
+        avgIceThickness: 41.440000000000005
+        avgSurfaceTemperature: -9.534666666666665
+        dateTimeStamp: "2026-04-18T17:45:00.0000000Z"
+        id: "FifthAvenue-20260418-174500"
+        location: "FifthAvenue"
+        maxSurface: 14.31
+        maxThickness: 74.92
+        minSurface: -39.64
+        minThickness: 0.93
+        readings: 30
+        snowAccumulation: 59.09
+        status: "Safe"
+        _attachments: "attachments/"
+        _etag: "\"1b008314-0000-0a00-0000-69e3c3220000\""
+        _rid: "ZZxRAKwB8CxkAAAAAAAAAA=="
+        _self: "dbs/ZZxRAA==/colls/ZZxRAKwB8Cw=/docs/ZZxRAKwB8CxkAAAAAAAAAA==/"
+        _ts: 1776534306
+        [[Prototype]]: Object
+    }
+    2: {
+        avgExternalTemperature: -11.02
+        avgIceThickness: 38.54666666666666
+        avgSurfaceTemperature: -17.965333333333334
+        dateTimeStamp: "2026-04-18T17:45:00.0000000Z"
+        id: "NAC-20260418-174500"
+        location: "NAC"
+        maxSurface: 13.22
+        maxThickness: 74.11
+        minSurface: -39.79
+        minThickness: 1.95
+        readings: 30
+        snowAccumulation: 58.34
+        status: "Safe"
+        _attachments: "attachments/"
+        _etag: "\"1b008214-0000-0a00-0000-69e3c3220000\""
+        _rid: "ZZxRAKwB8CxjAAAAAAAAAA=="
+        _self: "dbs/ZZxRAA==/colls/ZZxRAKwB8Cw=/docs/ZZxRAKwB8CxjAAAAAAAAAA==/"
+        _ts: 1776534306
+        [[Prototype]]: Object
+    }
+    length: 3
+    [[Prototype]]: Array(0)
+}
