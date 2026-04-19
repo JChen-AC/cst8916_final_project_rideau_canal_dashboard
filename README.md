@@ -33,7 +33,7 @@ To run it in the cloud an Azure App Service needs to be set up
 
 ## Installation
 
-## Local 
+### Local 
 1) Clone the repository 
     git clone 
 
@@ -41,7 +41,7 @@ To run it in the cloud an Azure App Service needs to be set up
 3) Download the required packages
     npm install 
 
-## Configuration
+### Configuration
 
 1) Create .env file
 2) Add environment variables 
