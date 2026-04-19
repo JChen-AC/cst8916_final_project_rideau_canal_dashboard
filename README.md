@@ -35,7 +35,7 @@ To run it in the cloud, an Azure App Service needs to be set up.
 
 ### Local 
 1) Clone the repository 
-    git clone https://github.com/JChen-AC/cst8916_final_project_dashboard.git
+    git clone https://github.com/JChen-AC/cst8916_final_project_rideau-canal-dashboard.git
 
 2) Cd into the project folder
 3) Download the required packages
